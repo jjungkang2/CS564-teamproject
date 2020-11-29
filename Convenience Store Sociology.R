@@ -73,9 +73,11 @@ ggplot() + geom_polygon(data=crime_map, aes(x=long, y=lat, group=group, fill=Sto
 
 ##### 사회적 신뢰 상관 관계 분석 #####
 
-library(corrplot)
+library(PerformanceAnalytics)
 trust_cor = cbind(conv_dat[,3], trust_dat[,3:9])
 colnames(trust_cor)[1] = "Store"
+
+chart.Correlation(trust_cor)
 
 trust_cor = cor(trust_cor)
 trust_cor2 = as.data.frame(trust_cor[1,2:8])
@@ -93,6 +95,8 @@ ggplot(trust_cor2, aes(x=rownames(trust_cor2), y=Corr)) +
 
 crime_cor = cbind(conv_dat[,3], crime_dat[,3:14])
 colnames(crime_cor)[1] = "Store"
+
+chart.Correlation(crime_cor)
 
 crime_cor = cor(crime_cor)
 crime_cor2 = as.data.frame(crime_cor[1, 2:13])
@@ -140,6 +144,32 @@ ggplot(raped_scope, aes(x=Region, y=Scope, fill=State)) +
 
 crime_dat = cbind(crime_dat, conv_dat$StoreNum)
 colnames(crime_dat)[15] = "Store" 
+
+par(mfrow = c(2,2))
+summary(lm(Store ~ Total, data = crime_dat))
+plot(lm(Store ~ Total, data = crime_dat))
+summary(lm(Store ~ TotalR, data = crime_dat))
+plot(lm(Store ~ TotalR, data = crime_dat))
+summary(lm(Store ~ Murder, data = crime_dat))
+plot(lm(Store ~ Murder, data = crime_dat))
+summary(lm(Store ~ MurderR, data = crime_dat))
+plot(lm(Store ~ MurderR, data = crime_dat))
+summary(lm(Store ~ Robber, data = crime_dat))
+plot(lm(Store ~ Robber, data = crime_dat))
+summary(lm(Store ~ RobberR, data = crime_dat))
+plot(lm(Store ~ RobberR, data = crime_dat))
+summary(lm(Store ~ Rape, data = crime_dat))
+plot(lm(Store ~ Rape, data = crime_dat))
+summary(lm(Store ~ RapeR, data = crime_dat))
+plot(lm(Store ~ RapeR, data = crime_dat))
+summary(lm(Store ~ Theft, data = crime_dat))
+plot(lm(Store ~ Theft, data = crime_dat))
+summary(lm(Store ~ TheftR, data = crime_dat))
+plot(lm(Store ~ TheftR, data = crime_dat))
+summary(lm(Store ~ Force, data = crime_dat))
+plot(lm(Store ~ Force, data = crime_dat))
+summary(lm(Store ~ ForceR, data = crime_dat))
+plot(lm(Store ~ ForceR, data = crime_dat))
 
 ggplot(crime_dat, aes(x=Store, y=Total)) + 
   ggtitle("총합 범죄 발생 회귀 분석") +
@@ -193,6 +223,21 @@ ggplot(crime_dat, aes(x=Store, y=ForceR)) +
 
 trust_dat = cbind(trust_dat, conv_dat$StoreNum)
 colnames(trust_dat)[10] = "Store" 
+
+summary(lm(Store ~ Total, data = trust_dat))
+plot(lm(Store ~ Total, data = trust_dat))
+summary(lm(Store ~ Family, data = trust_dat))
+plot(lm(Store ~ Family, data = trust_dat))
+summary(lm(Store ~ Neighbor, data = trust_dat))
+plot(lm(Store ~ Neighbor, data = trust_dat))
+summary(lm(Store ~ Friend, data = trust_dat))
+plot(lm(Store ~ Friend, data = trust_dat))
+summary(lm(Store ~ Public, data = trust_dat))
+plot(lm(Store ~ Public, data = trust_dat))
+summary(lm(Store ~ Stranger, data = trust_dat))
+plot(lm(Store ~ Stranger, data = trust_dat))
+summary(lm(Store ~ Foreign, data = trust_dat))
+plot(lm(Store ~ Foreign, data = trust_dat))
 
 ggplot(trust_dat, aes(x=Store, y=Total)) + 
   ggtitle("종합 신뢰도 회귀 분석") +
