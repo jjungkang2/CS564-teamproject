@@ -24,6 +24,8 @@ trust_dat[,3:9] = scale(trust_dat[,3:9])
 crime_dat[,3:14] = scale(crime_dat[,3:14])
 raped_dat[,2:16] = scale(raped_dat[,2:16])
 
+crime_dat = crime_dat[,c(1,2,4,6,8,10,12,14)]
+
 ##### 지도 구역 지정 #####
 
 library(raster)
@@ -62,18 +64,19 @@ ggplot() +
 ##### 범죄 발생 지도 출력 #####
 
 crime_map = merge(seoul, cbind(crime_dat, conv_dat[,3]), by='id')
-colnames(crime_map)[21] = "Store"
-ggplot() + geom_polygon(data=crime_map, aes(x=long, y=lat, group=group, fill=Store*Total), color='gray40') +
+colnames(crime_map)[15] = "Store"
+ggplot() + geom_polygon(data=crime_map, aes(x=long, y=lat, group=group, fill=Store*TotalR), color='gray40') +
   scale_fill_gradient2(low = "#FF0000", high = "#0081FF") +
-  labs(fill = "종합 범죄 발생 건수") +
+  labs(fill = "종합 범죄 발생 검거율") +
   coord_fixed(ratio = 1.3) +
-  ggtitle("범죄 발생 건수") +
+  ggtitle("범죄 발생 검거율") +
   geom_text(data =gu_name, aes(x = long, y = lat, label = Region))
 
 
 ##### 사회적 신뢰 상관 관계 분석 #####
 
 library(PerformanceAnalytics)
+library(corrplot)
 trust_cor = cbind(conv_dat[,3], trust_dat[,3:9])
 colnames(trust_cor)[1] = "Store"
 
@@ -93,13 +96,13 @@ ggplot(trust_cor2, aes(x=rownames(trust_cor2), y=Corr)) +
 
 ##### 범죄 발생 상관 관계 분석 #####
 
-crime_cor = cbind(conv_dat[,3], crime_dat[,3:14])
+crime_cor = cbind(conv_dat[,3], crime_dat[,3:8])
 colnames(crime_cor)[1] = "Store"
 
 chart.Correlation(crime_cor)
 
 crime_cor = cor(crime_cor)
-crime_cor2 = as.data.frame(crime_cor[1, 2:13])
+crime_cor2 = as.data.frame(crime_cor[1, 2:7])
 colnames(crime_cor2)[1] = "Corr"
 
 corrplot(crime_cor, method="number")
