@@ -1,7 +1,7 @@
 ##### setting directory and initialization #####
 
 rm(list=ls())
-setwd("C:/Users/milim/OneDrive - kaist.ac.kr/2020F/Rì„ í™œìš©í•œ ë¹…ë°ì´í„° ë¶„ì„ ê¸°ì´ˆ/íŒ€í”Œ/CS564-teamproject")
+setwd("C:/Users/¿ìÁö¼ö/Dropbox/Coursework/2020-2/R/project/Team13")
 getwd()
 
 
@@ -43,9 +43,9 @@ gu_name = read.table(file="data/gu_name.txt", sep='\t', header=TRUE)
 conv_map = merge(seoul, conv_dat, by='id')
 ggplot() + geom_polygon(data=conv_map, aes(x=long, y=lat, group=group, fill=StoreNum), color='gray40') +
   scale_fill_gradient(low = "#DBEDFF", high = "#0081FF") +
-  labs(fill = "í¸ì˜ì  ìˆ˜") +
+  labs(fill = "ÆíÀÇÁ¡ ¼ö") +
   coord_fixed(ratio = 1.3) +
-  ggtitle("ì„œìš¸ í¸ì˜ì  ë¶„í¬") +
+  ggtitle("¼­¿ï ÆíÀÇÁ¡ ºĞÆ÷") +
   geom_text(data =gu_name, aes(x = long, y = lat, label = Region))
 
 
@@ -56,9 +56,9 @@ colnames(trust_map)[16] = "Store"
 ggplot() + 
   geom_polygon(data=trust_map, aes(x=long, y=lat, group=group, fill=Store*Total), color='gray40') +
   scale_fill_gradient2(low = "#FF0000", high = "#0081FF") +
-  labs(fill = "ì¢…í•© ì‹ ë¢° ì§€ìˆ˜") +
+  labs(fill = "Á¾ÇÕ ½Å·Ú Áö¼ö") +
   coord_fixed(ratio = 1.3) +
-  ggtitle("ì‚¬íšŒì  ì‹ ë¢° ì§€ìˆ˜") +
+  ggtitle("»çÈ¸Àû ½Å·Ú Áö¼ö") +
   geom_text(data =gu_name, aes(x = long, y = lat, label = Region))
 
 ##### [Map] printing out the crime arrest rate map #####
@@ -67,9 +67,9 @@ crime_map = merge(seoul, cbind(crime_dat, conv_dat[,3]), by='id')
 colnames(crime_map)[15] = "Store"
 ggplot() + geom_polygon(data=crime_map, aes(x=long, y=lat, group=group, fill=Store*TotalR), color='gray40') +
   scale_fill_gradient2(low = "#FF0000", high = "#0081FF") +
-  labs(fill = "ì¢…í•© ë²”ì£„ ë°œìƒ ê²€ê±°ìœ¨") +
+  labs(fill = "Á¾ÇÕ ¹üÁË ¹ß»ı °Ë°ÅÀ²") +
   coord_fixed(ratio = 1.3) +
-  ggtitle("ë²”ì£„ ë°œìƒ ê²€ê±°ìœ¨") +
+  ggtitle("¹üÁË ¹ß»ı °Ë°ÅÀ²") +
   geom_text(data =gu_name, aes(x = long, y = lat, label = Region))
 
 
@@ -90,7 +90,7 @@ corrplot(trust_cor, method="number")
 ggplot(trust_cor2, aes(x=rownames(trust_cor2), y=Corr)) +
   geom_bar(stat="identity", position="dodge", fill='#0081FF') +
   coord_cartesian(ylim = c(-0.9:0.9)) +
-  ggtitle("ì‚¬íšŒì  ì‹ ë¢° ìƒê´€ ê´€ê³„") +
+  ggtitle("»çÈ¸Àû ½Å·Ú »ó°ü °ü°è") +
   theme_bw() 
 
 
@@ -109,7 +109,7 @@ corrplot(crime_cor, method="number")
 ggplot(crime_cor2, aes(x=rownames(crime_cor2), y=Corr)) +
   geom_bar(stat="identity", position="dodge", fill='#0081FF') +
   coord_cartesian(ylim = c(-0.2:0.9)) +
-  ggtitle("ë²”ì£„ ë°œìƒ ìƒê´€ ê´€ê³„") +
+  ggtitle("¹üÁË ¹ß»ı »ó°ü °ü°è") +
   theme_bw() 
 
 
@@ -117,7 +117,7 @@ ggplot(crime_cor2, aes(x=rownames(crime_cor2), y=Corr)) +
 
 ggplot(rapedT_dat, aes(x=Year, y=Total, colour=Started)) + 
   geom_vline(xintercept=2013) +
-  ggtitle("ì—¬ì„± ì•ˆì‹¬ í¸ì˜ì  ì´ì¤‘ì°¨ë¶„ë²•") +
+  ggtitle("¿©¼º ¾È½É ÆíÀÇÁ¡ ÀÌÁßÂ÷ºĞ¹ı") +
   stat_summary(geom="line") +
   geom_line(stat="smooth",method = "lm", formula = y ~ 0 + I(1/x) + I((x-1)/x),
               size = 1.2, linetype ="dashed", alpha = 0.5) +
@@ -141,7 +141,7 @@ ggplot(raped_scope, aes(x=Region, y=Scope, fill=State)) +
   theme(axis.text.x=element_text(angle=45, hjust=1)) +
   geom_line(aes(x=Region, y=Percent/2), group=1) +
   geom_text(aes(x=Region, y=Percent/2, label=as.integer(Percent))) +
-  ggtitle("êµ¬ ë³„ ë²”ì£„ ê°ì†Œìœ¨")
+  ggtitle("±¸ º° ¹üÁË °¨¼ÒÀ²")
 
 
 ##### Regression #####
@@ -160,7 +160,7 @@ crime_dat %>%
   select(TotalR, MurderR, RobberR, RapeR, TheftR, ForceR) %>%
   map(~lm(.x~crime_dat$Store)) %>%
   map(summary) %>%
-  map('adj.r.squared') #adj.r.squared?? ?Ò·??ï¿½ï¿½?
+  map('adj.r.squared') #adj.r.squared¸¸ ºÒ·¯¿À±â
 
 par(mfrow = c(2,2))
 plot(lm(TotalR~Store, data = crime_dat))
@@ -170,31 +170,34 @@ plot(lm(RapeR~Store, data = crime_dat))
 plot(lm(TheftR~Store, data = crime_dat))
 plot(lm(ForceR~Store, data = crime_dat))
 
-ggplot(crime_dat, aes(x=Store, y=TotalR)) + 
-  ggtitle("ì´í•© ë²”ì£„ ê²€ê±°ìœ¨ íšŒê·€ ë¶„ì„") +
+ggplot(crime_dat, aes(x=Total, y=Store)) + 
+  ggtitle("ÃÑÇÕ ¹üÁË ¹ß»ı È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(crime_dat, aes(x=Store, y=MurderR)) + 
-  ggtitle("ì‚´ì¸ ê²€ê±°ìœ¨ íšŒê·€ ë¶„ì„") +
+ggplot(crime_dat, aes(x=TotalR, y=Store)) + 
+  ggtitle("ÃÑÇÕ ¹üÁË °Ë°ÅÀ² È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(crime_dat, aes(x=Store, y=RobberR)) + 
-  ggtitle("ê°•ë„ ê²€ê±°ìœ¨ íšŒê·€ ë¶„ì„") +
+ggplot(crime_dat, aes(x=MurderR, y=Store)) + 
+  ggtitle("»ìÀÎ °Ë°ÅÀ² È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(crime_dat, aes(x=Store, y=RapeR)) + 
-  ggtitle("ê°•ê°„ ê²€ê±°ìœ¨ íšŒê·€ ë¶„ì„") +
+ggplot(crime_dat, aes(x=RobberR, y=Store)) + 
+  ggtitle("°­µµ °Ë°ÅÀ² È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(crime_dat, aes(x=Store, y=TheftR)) + 
-  ggtitle("ì ˆë„ ê²€ê±°ìœ¨ íšŒê·€ ë¶„ì„") +
+ggplot(crime_dat, aes(x=RapeR, y=Store)) + 
+  ggtitle("°­°£ °Ë°ÅÀ² È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(crime_dat, aes(x=Store, y=ForceR)) + 
-  ggtitle("í­ë ¥ ê²€ê±°ìœ¨ íšŒê·€ ë¶„ì„") +
+ggplot(crime_dat, aes(x=TheftR, y=Store)) + 
+  ggtitle("Àıµµ °Ë°ÅÀ² È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-
+ggplot(crime_dat, aes(x=ForceR, y=Store)) + 
+  ggtitle("Æø·Â °Ë°ÅÀ² È¸±Í ºĞ¼®") +
+  stat_summary(geom="line") +
+  stat_smooth(method="lm", se=F, linetype="dashed")
 
 trust_dat = cbind(trust_dat, conv_dat$StoreNum)
 colnames(trust_dat)[10] = "Store" 
@@ -218,31 +221,32 @@ plot(lm(Public~Store, data = trust_dat))
 plot(lm(Stranger~Store, data = trust_dat))
 plot(lm(Foreign~Store, data = trust_dat))
 
-ggplot(trust_dat, aes(x=Store, y=Total)) + 
-  ggtitle("ì¢…í•© ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Total, y=Store)) + 
+  ggtitle("Á¾ÇÕ ½Å·Úµµ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(trust_dat, aes(x=Store, y=Family)) + 
-  ggtitle("ê°€ì¡± ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Family, y=Store)) + 
+  ggtitle("°¡Á· ½Å·Úµµ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(trust_dat, aes(x=Store, y=Neighbor)) + 
-  ggtitle("ì´ì›ƒ ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Neighbor, y=Store)) + 
+  ggtitle("ÀÌ¿ô ½Å·Úµµ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(trust_dat, aes(x=Store, y=Friend)) + 
-  ggtitle("ì¹œêµ¬ ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Friend, y=Store)) + 
+  ggtitle("Ä£±¸ ½Å·ÚµÇ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(trust_dat, aes(x=Store, y=Public)) + 
-  ggtitle("ê³µê³µê¸°ê´€ ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Public, y=Store)) + 
+  ggtitle("°ø°ø±â°ü ½Å·Úµµ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(trust_dat, aes(x=Store, y=Stranger)) + 
-  ggtitle("ë‚¯ì„  ì‚¬ëŒ ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Stranger, y=Store)) + 
+  ggtitle("³¸¼± »ç¶÷ ½Å·Úµµ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
-ggplot(trust_dat, aes(x=Store, y=Foreign)) + 
-  ggtitle("êµ­ë‚´ ê±°ì£¼ ì™¸êµ­ì¸ ì‹ ë¢°ë„ íšŒê·€ ë¶„ì„") +
+ggplot(trust_dat, aes(x=Foreign, y=Store)) + 
+  ggtitle("±¹³» °ÅÁÖ ¿Ü±¹ÀÎ ½Å·Úµµ È¸±Í ºĞ¼®") +
   stat_summary(geom="line") +
   stat_smooth(method="lm", se=F, linetype="dashed")
+
